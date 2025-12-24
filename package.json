@@ -10,6 +10,8 @@
     "stop": "node ./scripts/stop-server.js",
     "register": "gemini mcp add -s project local-mcp node src/server.js --cwd ./mcp-server --description \"Local project MCP server (stdio)\" || true",
     "unregister": "gemini mcp remove local-mcp -s project || true",
+    "setup": "npm ci && echo \"Done. Next: 'npm run start:bg' to start or 'npm run register' to register with Gemini.\"",
+    "install": "sh ./scripts/install.sh",
     "test": "tap",
     "lint": "eslint . --ext .js"
   },

@@ -39,6 +39,16 @@ cd mcp-server
 npm install
 ```
 
+Quick setup (one-liner):
+
+```bash
+# Install deps only
+npm run setup
+
+# Install deps and run the installer (optionally register with Gemini)
+npm run install -- --register
+```
+
 2. Start the server (stdio transport):
 
 ```bash
@@ -163,5 +173,4 @@ To enable the Gemini step, add a repository secret named `GEMINI_CLI_TOKEN` cont
 
 ---
 
-If you'd like, I can add extra tools (formatting, coverage, test reporters) or
-scaffold a GitHub Action that runs an end-to-end Gemini CLI check on PRs.
+If you'd like, I can add extra tools (formatting, coverage, test reporters), scaffold a GitHub Action that runs an end-to-end Gemini CLI check on PRs, or make the installer more featureful (e.g., add global `bin` commands).
