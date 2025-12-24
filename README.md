@@ -47,6 +47,28 @@ npm start
 node src/server.js
 ```
 
+Stopping the server
+
+- If you started the server in the **foreground** (interactive), press **Ctrl+C** to stop it.
+- If you started it in the **background** (e.g., with `nohup` or `&`), find and kill the process:
+
+```bash
+# find PID(s)
+pgrep -f 'node src/server.js' || ps aux | grep 'node src/server.js'
+# kill by PID
+kill <PID>
+# or kill by process name
+pkill -f 'node src/server.js'
+```
+
+- On **Windows**, use Task Manager or run:
+
+```powershell
+taskkill /F /IM node.exe
+```
+
+- In CI the workflow kills the server automatically (see `.github/workflows/mcp-smoke.yml`).
+
 3. From the project root, register the server with Gemini (project scope):
 
 ```bash
