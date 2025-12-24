@@ -1,0 +1,41 @@
+name: MCP server smoke test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: cd mcp-server && npm ci
+
+      - name: Start MCP server and wait for connect
+        run: |
+          cd mcp-server
+          nohup node src/server.js 2>server.err.log >server.out.log &
+          SERVER_PID=$!
+          echo "server pid $SERVER_PID"
+          TIMEOUT=15
+          SECONDS=0
+          while ! grep -q "MCP server connected via stdio" server.err.log; do
+            sleep 1
+            SECONDS=$((SECONDS+1))
+            if [ $SECONDS -ge $TIMEOUT ]; then
+              echo "Server failed to start. Dumping server.err.log:"
+              cat server.err.log || true
+              kill $SERVER_PID || true
+              exit 1
+            fi
+          done
+          echo "MCP server reported connected"
+          kill $SERVER_PID || true

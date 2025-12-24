@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "local-mcp": {
+      "command": "node",
+      "args": [
+        "src/server.js",
+        "--cwd",
+        "./mcp-server"
+      ],
+      "trust": true,
+      "description": "Local project MCP server (stdio, trusted for testing)"
+    }
+  }
+}

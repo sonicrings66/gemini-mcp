@@ -1,0 +1,20 @@
+{
+  "name": "local-mcp-server",
+  "version": "0.1.0",
+  "description": "Local MCP server exposing safe developer tools for Gemini CLI",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "echo \"No tests defined - run your project tests from the root\" && exit 0"
+  },
+  "keywords": ["mcp","gemini","cli","server"],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.1",
+    "execa": "^9.6.1",
+    "simple-git": "^3.19.0",
+    "zod": "^3.22.2"
+  }
+}
