@@ -6,6 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
+    "start:bg": "nohup node src/server.js > server.out.log 2> server.err.log & echo $! > .mcp-server.pid",
+    "stop": "node ./scripts/stop-server.js",
+    "register": "gemini mcp add -s project local-mcp node src/server.js --cwd ./mcp-server --description \"Local project MCP server (stdio)\" || true",
+    "unregister": "gemini mcp remove local-mcp -s project || true",
     "test": "tap",
     "lint": "eslint . --ext .js"
   },

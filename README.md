@@ -50,15 +50,27 @@ node src/server.js
 Stopping the server
 
 - If you started the server in the **foreground** (interactive), press **Ctrl+C** to stop it.
-- If you started it in the **background** (e.g., with `nohup` or `&`), find and kill the process:
+
+- Start and stop using the convenience npm scripts (recommended):
 
 ```bash
-# find PID(s)
-pgrep -f 'node src/server.js' || ps aux | grep 'node src/server.js'
-# kill by PID
-kill <PID>
-# or kill by process name
-pkill -f 'node src/server.js'
+# Start in background (writes logs and PID file)
+npm run start:bg
+
+# Stop the background server using the helper script
+npm run stop
+```
+
+The `start:bg` script writes logs to `server.out.log` and `server.err.log` and writes the server PID to `.mcp-server.pid` in this folder. The `stop` script will attempt to stop the server by PID (and will fallback to `pkill -f 'node src/server.js'` if needed).
+
+- You can also register / unregister the server with the Gemini CLI using these convenience scripts (requires `gemini` on your PATH):
+
+```bash
+# Register (project-scoped)
+npm run register
+
+# Unregister
+npm run unregister
 ```
 
 - On **Windows**, use Task Manager or run:
@@ -67,7 +79,10 @@ pkill -f 'node src/server.js'
 taskkill /F /IM node.exe
 ```
 
-- In CI the workflow kills the server automatically (see `.github/workflows/mcp-smoke.yml`).
+- In CI the smoke workflow kills the server automatically (see `.github/workflows/mcp-smoke.yml`).
+
+
+
 
 3. From the project root, register the server with Gemini (project scope):
 
@@ -117,6 +132,16 @@ A smoke test workflow is included at `.github/workflows/mcp-smoke.yml`. It:
 - Fails the job if the server does not start within 15 seconds
 
 This validates the server can start in CI and prevents regressions.
+
+### Optional: End-to-end workflow (Gemini)
+
+An additional optional workflow is provided at `.github/workflows/mcp-e2e.yml` which:
+
+- Starts the server in the background and waits for it to connect
+- Runs the test suite
+- Optionally runs a Gemini CLI check if you configure a repo secret `GEMINI_CLI_TOKEN` (see the workflow file for the example step)
+
+To enable the Gemini step, add a repository secret named `GEMINI_CLI_TOKEN` containing a valid non-interactive token or API key and make sure the workflow has access to secrets (this step is skipped if the secret is not present). The workflow is safe to use without secrets — it will still start the server and run tests.
 
 ---
 

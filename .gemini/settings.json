@@ -7,8 +7,7 @@
         "--cwd",
         "./mcp-server"
       ],
-      "trust": true,
-      "description": "Local project MCP server (stdio, trusted for testing)"
+      "description": "Local project MCP server (stdio)"
     }
   }
 }

@@ -1,0 +1,49 @@
+name: MCP E2E (optional Gemini)
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install dependencies
+        run: |
+          cd mcp-server
+          npm ci
+      - name: Start server in background
+        run: |
+          cd mcp-server
+          npm run start:bg
+      - name: Wait for server connection
+        run: |
+          cd mcp-server
+          for i in {1..30}; do
+            if grep -q "MCP server connected via stdio" server.out.log; then
+              echo "connected"
+              break
+            fi
+            sleep 1
+          done
+          grep -q "MCP server connected via stdio" server.out.log
+      - name: Run tests
+        run: |
+          cd mcp-server
+          npm test
+      - name: Optional Gemini CLI step
+        if: ${{ secrets.GEMINI_CLI_TOKEN != '' }}
+        run: |
+          # Example: install the Gemini CLI and run a simple prompt using a token stored
+          # in the repo secret `GEMINI_CLI_TOKEN`. To enable this step, add the secret to
+          # the repository's settings and ensure it is a valid non-interactive token.
+          npm i -g @google/gemini-cli
+          gemini -p "Say 'Authentication OK'" --api-key "${{ secrets.GEMINI_CLI_TOKEN }}"
+      - name: Stop server (cleanup)
+        run: |
+          cd mcp-server
+          npm run stop || true
