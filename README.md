@@ -1,8 +1,13 @@
 # Local MCP server for Gemini CLI
 
+![MCP smoke test](https://github.com/sonicrings66/gemini-mcp/actions/workflows/mcp-smoke.yml/badge.svg)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
+
 This repository contains a small, safe local MCP (Model Context Protocol) server
 that exposes developer tools to the Gemini CLI. Use it to let Gemini inspect and
 help with your local project.
+
+Repository: `sonicrings66/gemini-mcp`
 
 ---
 

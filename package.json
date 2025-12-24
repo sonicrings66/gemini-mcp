@@ -6,9 +6,15 @@
   "type": "module",
   "scripts": {
     "start": "node src/server.js",
-    "test": "echo \"No tests defined - run your project tests from the root\" && exit 0"
+    "test": "tap",
+    "lint": "eslint . --ext .js"
   },
-  "keywords": ["mcp","gemini","cli","server"],
+  "keywords": [
+    "mcp",
+    "gemini",
+    "cli",
+    "server"
+  ],
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
@@ -16,5 +22,9 @@
     "execa": "^9.6.1",
     "simple-git": "^3.19.0",
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "tap": "^21.5.0"
   }
 }
